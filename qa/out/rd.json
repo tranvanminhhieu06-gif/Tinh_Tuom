@@ -1,0 +1,97 @@
+{
+ "firstScreen": {
+  "audience": true,
+  "title": true,
+  "sub": true,
+  "cta": true,
+  "ctaBottom": 801,
+  "img": [
+   true,
+   true
+  ]
+ },
+ "fonts": {
+  "families": [
+   "\"Be Vietnam Pro\""
+  ],
+  "loaded": [
+   "400normal",
+   "400italic",
+   "500normal",
+   "600normal",
+   "700normal",
+   "800normal"
+  ]
+ },
+ "uppercase": [
+  "eyebrow",
+  "eyebrow-num"
+ ],
+ "lineHeightMin": {
+  "min": 1.2,
+  "who": "SPAN.pillar-num"
+ },
+ "bg": {
+  "hero": [],
+  "portrait": [],
+  "form": [
+   "rgb(255, 59, 48) @963,805 btn btn-primary"
+  ],
+  "popup": [],
+  "footer": [
+   "rgb(255, 59, 48) @963,305 btn btn-primary"
+  ]
+ },
+ "particles": {
+  "canvas": "none",
+  "peopleOpacity": "1"
+ },
+ "particlesBack": "1",
+ "pinned": false,
+ "portrait": {
+  "pressed": 3,
+  "fitShown": true,
+  "unfitShown": false
+ },
+ "portraitKeyboard": "true",
+ "journey": [
+  true,
+  true,
+  true,
+  true
+ ],
+ "tabFromName": "f-phone",
+ "formErrors": [
+  "Vui lòng nhập họ và tên.",
+  "Số điện thoại cần đủ 10 số và bắt đầu bằng 0."
+ ],
+ "draftRestored": "Nguyễn Văn Thử",
+ "step2": "2",
+ "modal": {
+  "trap": [
+   "true:btn btn-primary btn-lg btn-block-sm",
+   "true:modal-close",
+   "true:btn btn-primary btn-lg btn-block-sm",
+   "true:modal-close",
+   "true:btn btn-primary btn-lg btn-block-sm"
+  ],
+  "draftCleared": null
+ },
+ "afterEsc": {
+  "hidden": true,
+  "focus": "register-title"
+ },
+ "afterBackdrop": true,
+ "overflow": {
+  "W": 1440,
+  "sw": 1440,
+  "bad": []
+ },
+ "sticky": false,
+ "targets": [],
+ "googleFonts": [],
+ "requests": [
+  "http://localhost:5173/index.html"
+ ],
+ "logs": []
+}

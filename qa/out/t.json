@@ -1,0 +1,115 @@
+{
+ "firstScreen": {
+  "audience": true,
+  "title": true,
+  "sub": true,
+  "cta": true,
+  "ctaBottom": 439,
+  "img": [
+   true,
+   true
+  ]
+ },
+ "fonts": {
+  "families": [
+   "\"Be Vietnam Pro\""
+  ],
+  "loaded": [
+   "400normal",
+   "400italic",
+   "500normal",
+   "600normal",
+   "700normal",
+   "800normal"
+  ]
+ },
+ "uppercase": [
+  "eyebrow",
+  "eyebrow-num"
+ ],
+ "lineHeightMin": {
+  "min": 1.2,
+  "who": "SPAN.pillar-num"
+ },
+ "bg": {
+  "hero": [],
+  "portrait": [
+   "rgb(23, 79, 196) @88,803 [object SVGAnimatedString]",
+   "rgb(0, 0, 0) @598,803 btn btn-dark",
+   "rgb(0, 0, 0) @683,803 [object SVGAnimatedString]"
+  ],
+  "form": [
+   "rgb(23, 79, 196) @88,347 ",
+   "rgb(23, 79, 196) @173,347 ",
+   "rgb(23, 79, 196) @258,347 ",
+   "rgb(229, 229, 229) @343,347 progress-bar",
+   "rgb(229, 229, 229) @428,347 progress-bar",
+   "rgb(229, 229, 229) @513,347 progress-bar",
+   "rgb(229, 229, 229) @598,347 progress-bar",
+   "rgb(229, 229, 229) @683,347 progress-bar"
+  ],
+  "popup": [
+   "rgb(255, 59, 48) @343,689 btn-label",
+   "rgb(255, 59, 48) @428,689 [object SVGAnimatedString]"
+  ],
+  "footer": [
+   "rgb(255, 59, 48) @598,461 btn btn-primary",
+   "rgb(255, 59, 48) @683,461 btn btn-primary"
+  ]
+ },
+ "pinned": false,
+ "portrait": {
+  "pressed": 3,
+  "fitShown": true,
+  "unfitShown": false
+ },
+ "portraitKeyboard": "true",
+ "journey": [
+  true,
+  true,
+  true,
+  true
+ ],
+ "tabFromName": "f-phone",
+ "formErrors": [
+  "Vui lòng nhập họ và tên.",
+  "Số điện thoại cần đủ 10 số và bắt đầu bằng 0."
+ ],
+ "draftRestored": "Nguyễn Văn Thử",
+ "step2": "2",
+ "modal": {
+  "trap": [
+   "true:btn btn-primary btn-lg btn-block-sm",
+   "true:modal-close",
+   "true:btn btn-primary btn-lg btn-block-sm",
+   "true:modal-close",
+   "true:btn btn-primary btn-lg btn-block-sm"
+  ],
+  "draftCleared": null
+ },
+ "afterEsc": {
+  "hidden": true,
+  "focus": "register-title"
+ },
+ "afterBackdrop": true,
+ "overflow": {
+  "W": 768,
+  "sw": 768,
+  "bad": []
+ },
+ "sticky": false,
+ "targets": [
+  [
+   "blue-link",
+   290,
+   43
+  ]
+ ],
+ "googleFonts": [],
+ "requests": [
+  "http://localhost:5173/index.html",
+  "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
+ ],
+ "logs": []
+}
