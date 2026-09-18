@@ -85,7 +85,7 @@ def main():
         "{{STYLE}}": css.replace("/*{{FONTS}}*/", font_faces()),
         "{{MAIN_JS}}": js,
         "{{FAVICON}}": favicon,
-        "{{LOGO_HEADER}}": logo_img("tt-word", "logo-h", "", 40),
+        "{{LOGO_HEADER}}": logo_img("tt-web", "logo-h", "", 68),  # img/logoweb.jpg (logo ngang)
         "{{LOGO_FOOTER}}": logo_img("tt-full", "logo-v", "Tinh Tươm - Tinh hoa tự chủ", 140),
         # popup dùng lại ảnh của chân trang (JS gán src) để không nhúng base64 hai lần
         "{{LOGO_MODAL}}": re.sub(r'src="[^"]+"', 'src="data:," data-logo-copy', logo_img("tt-full", "logo-v logo-v--sm", "Tinh Tươm", 100)),

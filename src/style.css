@@ -100,9 +100,9 @@ main:focus{outline:none}
 .site-header.is-stuck{background:rgba(255,255,255,.95);box-shadow:0 1px 0 var(--line)}
 @supports (backdrop-filter:blur(8px)){ .site-header.is-stuck{backdrop-filter:blur(8px)} }
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--header-h)}
-.brand{display:block;padding:8px 8px 8px 0;border-radius:6px}
-.logo-h{height:32px;width:auto}
-@media (min-width:900px){ .logo-h{height:40px} }
+.brand{display:block;padding:2px 8px 2px 0;border-radius:6px}
+.logo-h{height:52px;width:auto}
+@media (min-width:900px){ .logo-h{height:68px} }
 
 /* ============ HERO ============ */
 .hero{position:relative;padding-top:clamp(16px,3vw,40px);padding-bottom:clamp(40px,6vw,72px);isolation:isolate}
