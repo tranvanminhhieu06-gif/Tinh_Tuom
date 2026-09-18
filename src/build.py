@@ -1,7 +1,6 @@
 """Ghép template.html + style.css + main.js + font/logo/ảnh base64 thành một file index.html tự chứa."""
 import base64
 import re
-import urllib.parse
 from pathlib import Path
 
 from PIL import Image
@@ -32,34 +31,11 @@ def data_uri(path: Path, mime: str) -> str:
     return f"data:{mime};base64,{b64(path)}"
 
 
-def clean_svg(name: str) -> str:
-    s = (DL / name).read_text(encoding="utf-8")
-    s = re.sub(r"<metadata>.*?</metadata>", "", s, flags=re.S)
-    s = s.replace(' xmlns:c2pa="http://c2pa.org/manifest"', "")
-    s = re.sub(r'\s(width|height)="[\d.]+"', "", s, count=2)
-    return s
-
-
-def header_logo() -> str:
-    """Logo ngang đen inline; con dấu có thêm một nét viền để vẽ khung một lần khi tải trang."""
-    s = clean_svg("tinhtuom-logo-ngang-den.svg")
-    s = s.replace("<svg ", '<svg class="logo-h" focusable="false" aria-hidden="true" ', 1)
-    m = re.search(r'(<g transform="scale\(0\.36\)">)(<path fill="#000000" fill-rule="evenodd" d="([^"]+)"/>)', s)
-    assert m, "không tìm thấy con dấu trong logo ngang"
-    d = m.group(3)
-    new = (m.group(1)
-           + f'<path class="seal-fill" fill="#000000" fill-rule="evenodd" d="{d}"/>'
-           + f'<path class="seal-stroke" pathLength="1" d="{d}"/>')
-    return s.replace(m.group(0), new, 1)
-
-
-def logo_symbol() -> str:
-    """Logo dọc đen dùng một lần làm <symbol>, footer + popup tham chiếu bằng <use>."""
-    s = clean_svg("tinhtuom-logo-doc-den.svg")
-    vb = re.search(r'viewBox="([^"]+)"', s).group(1)
-    inner = re.sub(r"^<svg[^>]*>|</svg>\s*$", "", s.strip())
-    return (f'<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">'
-            f'<symbol id="logo-doc" viewBox="{vb}">{inner}</symbol></svg>')
+def logo_img(name: str, cls: str, alt: str, display_h: int) -> str:
+    """Logo Tinh Tươm mới (tách nền trắng từ img/tinhtuom-logo-moi.jpg, xem build/tt-*.webp)."""
+    w, h = Image.open(BUILD / f"{name}.webp").size
+    return (f'<img class="{cls}" src="{data_uri(BUILD / f"{name}.webp", "image/webp")}" '
+            f'width="{round(w * display_h / h)}" height="{display_h}" alt="{alt}" decoding="async">')
 
 
 def font_faces() -> str:
@@ -104,13 +80,15 @@ def main():
     css = (SRC / "style.css").read_text(encoding="utf-8")
     js = (SRC / "main.js").read_text(encoding="utf-8")
 
-    favicon = "data:image/svg+xml," + urllib.parse.quote(clean_svg("tinhtuom-seal-do.svg"), safe=" =:/'\"#,.")
+    favicon = data_uri(BUILD / "tt-mark.png", "image/png")
     repl = {
         "{{STYLE}}": css.replace("/*{{FONTS}}*/", font_faces()),
         "{{MAIN_JS}}": js,
         "{{FAVICON}}": favicon,
-        "{{LOGO_HEADER}}": header_logo(),
-        "{{LOGO_SYMBOL}}": logo_symbol(),
+        "{{LOGO_HEADER}}": logo_img("tt-word", "logo-h", "", 40),
+        "{{LOGO_FOOTER}}": logo_img("tt-full", "logo-v", "Tinh Tươm - Tinh hoa tự chủ", 140),
+        # popup dùng lại ảnh của chân trang (JS gán src) để không nhúng base64 hai lần
+        "{{LOGO_MODAL}}": re.sub(r'src="[^"]+"', 'src="data:," data-logo-copy', logo_img("tt-full", "logo-v logo-v--sm", "Tinh Tươm", 100)),
         "{{IMG_NAM}}": img_tag(IMG / "sv-nam.webp", "image/webp", "Sinh viên nam cầm sổ, làm dấu OK",
                                "hero-img hero-img--nam", 'fetchpriority="high" loading="eager"'),
         "{{IMG_NU}}": img_tag(IMG / "sv-nu.webp", "image/webp", "Sinh viên nữ cầm sổ, làm dấu OK",

@@ -65,51 +65,6 @@
     }
   });
 
-  /* ---------- con dấu: vẽ nét khung một lần ---------- */
-  (function drawSeal() {
-    if (mqReduce.matches || !Element.prototype.animate) return;
-    const stroke = $('.seal-stroke');
-    const fill = $('.seal-fill');
-    if (!stroke || !fill) return;
-    const opts = { duration: 1700, easing: 'cubic-bezier(.45,0,.2,1)', delay: 150 };
-    stroke.animate([
-      { strokeDashoffset: 1, opacity: 1 },
-      { strokeDashoffset: 0, opacity: 1, offset: 0.72 },
-      { strokeDashoffset: 0, opacity: 0 },
-    ], { ...opts, fill: 'backwards' });
-    fill.animate([{ opacity: 0 }, { opacity: 0, offset: 0.6 }, { opacity: 1 }], { ...opts, fill: 'backwards' });
-  })();
-
-  /* ---------- 02 · bảng chọn "Bạn thấy mình ở cột nào?" ---------- */
-  const rows = $$('.compare-row');
-  const resFit = $('.result--fit');
-  const resUnfit = $('.result--unfit');
-  rows.forEach((row) => {
-    row.addEventListener('click', (e) => {
-      const btn = e.target.closest('.opt');
-      if (!btn) return;
-      const already = btn.getAttribute('aria-pressed') === 'true';
-      $$('.opt', row).forEach((b) => b.setAttribute('aria-pressed', 'false'));
-      row.classList.remove('pick-fit', 'pick-unfit');
-      if (!already) {
-        btn.setAttribute('aria-pressed', 'true');
-        row.classList.add(btn.dataset.side === 'fit' ? 'pick-fit' : 'pick-unfit');
-      }
-      updateResult();
-    });
-  });
-  function updateResult() {
-    const picks = rows.map((r) => (r.classList.contains('pick-fit') ? 'fit' : r.classList.contains('pick-unfit') ? 'unfit' : null));
-    const done = picks.every(Boolean);
-    const fit = picks.filter((p) => p === 'fit').length;
-    const show = done ? (fit >= 2 ? resFit : resUnfit) : null;
-    [resFit, resUnfit].forEach((el) => {
-      if (el === show) {
-        if (el.hidden) { el.hidden = false; el.classList.remove('is-in'); void el.offsetWidth; el.classList.add('is-in'); }
-      } else el.hidden = true;
-    });
-  }
-
   /* ---------- CTA dính đáy (mobile) ---------- */
   const sticky = $('.sticky-cta');
   const heroCta = $('#hero-cta');
@@ -338,6 +293,8 @@
 
   /* ---------- popup thành công ---------- */
   const modal = $('#success-modal');
+  const modalLogo = $('[data-logo-copy]', modal);
+  if (modalLogo) modalLogo.src = $('.site-footer .logo-v').src;
   const modalTitle = $('#modal-title');
   let titleWords = null;
   const outside = [header, $('main'), $('.site-footer'), sticky, $('.skip-link')];
@@ -610,8 +567,8 @@
     document.addEventListener('mouseleave', () => { root.classList.remove('has-cursor'); shown = false; });
     document.addEventListener('pointerover', (e) => {
       const t = e.target;
-      const onRed = t.closest('.btn-primary');
-      const onLink = t.closest('a, button, label.check, select, .opt');
+      const onRed = t.closest('.btn-primary, .btn-outline');
+      const onLink = t.closest('a, button, label.check, select');
       dot.classList.toggle('is-red', !!onRed);
       ring.classList.toggle('is-red', !!onRed);
       dot.classList.toggle('is-link', !!onLink && !onRed);
@@ -659,6 +616,7 @@
     const heroEl = $('.hero');
     const canvas = $('.hero-particles');
     const peopleWrap = $('.hero-people');
+    const arcEl = $('.hero-arc');
     const imgs = [$('.hero-img--nu'), $('.hero-img--nam')]; // nữ vẽ trước, nam đè lên
     await Promise.all(imgs.map((im) => (im.complete ? Promise.resolve() : new Promise((r) => { im.onload = r; }))));
 
@@ -673,7 +631,9 @@
     canvas.style.display = 'block';
     canvas.style.opacity = '1';
 
-    const TOTAL = 8000;
+    const IMG_TOTAL = 7000; // hạt lấy mẫu từ 2 ảnh sinh viên
+    const ARC_TOTAL = 2200; // hạt đỏ của vòm tròn phía sau
+    const TOTAL = IMG_TOTAL + ARC_TOTAL;
     // đọc điểm ảnh một lần (ảnh cùng nguồn data: nên không bị chặn CORS)
     const samples = imgs.map((im) => {
       const sw = 180;
@@ -745,10 +705,24 @@
       const rnd = new Float32Array(TOTAL * 3);
       const flag = new Float32Array(TOTAL);
       let n = 0;
+      // vòm đỏ vẽ trước (nằm sau), rải đều trong hình tròn; không gợn theo chuột
+      const ar = arcEl.getBoundingClientRect();
+      const acx = ar.left - hr.left + ar.width / 2;
+      const acy = ar.top - hr.top + ar.height / 2;
+      const aR = ar.width / 2;
+      for (; n < ARC_TOTAL; n++) {
+        const rr = aR * Math.sqrt(Math.random());
+        const th = Math.random() * Math.PI * 2;
+        pos[n * 2] = acx + rr * Math.cos(th);
+        pos[n * 2 + 1] = acy + rr * Math.sin(th);
+        col[n * 3] = 1; col[n * 3 + 1] = 59 / 255; col[n * 3 + 2] = 48 / 255;
+        rnd[n * 3] = Math.random(); rnd[n * 3 + 1] = Math.random(); rnd[n * 3 + 2] = Math.random();
+        flag[n] = 0;
+      }
       imgs.forEach((im, s) => {
         const r = im.getBoundingClientRect();
         const { sw, sh, pts } = samples[s];
-        const want = s === 0 ? Math.round(TOTAL * counts[0] / sum) : TOTAL - n;
+        const want = s === 0 ? Math.round(IMG_TOTAL * counts[0] / sum) : TOTAL - n;
         const avail = pts.length / 5;
         for (let i = 0; i < want && n < TOTAL; i++, n++) {
           const k = Math.floor(Math.random() * avail) * 5;
@@ -787,7 +761,7 @@
     }, { passive: true });
 
     let rt = 0;
-    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (!mqDesktop.matches) { canvas.style.display = 'none'; peopleWrap.style.opacity = ''; return; } canvas.style.display = 'block'; build(); dirty = true; }, 200); });
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (!mqDesktop.matches) { canvas.style.display = 'none'; peopleWrap.style.opacity = ''; arcEl.style.opacity = ''; return; } canvas.style.display = 'block'; build(); dirty = true; }, 200); });
 
     let lastT = performance.now();
     gsap.ticker.add(() => {
@@ -811,6 +785,7 @@
       // ảnh thật mờ dần khi hạt tách ra; cuộn ngược thì hiện lại
       const imgA = 1 - Math.min(1, Math.max(0, (prog - 0.02) / 0.12));
       peopleWrap.style.opacity = imgA.toFixed(3);
+      arcEl.style.opacity = imgA.toFixed(3);
       renderer.render({ scene: mesh });
     });
   }

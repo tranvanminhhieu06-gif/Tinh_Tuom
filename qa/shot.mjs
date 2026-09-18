@@ -81,8 +81,8 @@ try {
   // ---- màn hình đầu ----
   result.firstScreen = await js(`(() => {
     const vis = (s) => { const r = document.querySelector(s).getBoundingClientRect(); return r.bottom <= innerHeight && r.top >= 0; };
-    return { audience: vis('.audience'), title: vis('.hero-title'), sub: vis('.hero-sub'), cta: vis('.hero-cta .btn-primary'),
-      ctaBottom: Math.round(document.querySelector('.hero-cta .btn-primary').getBoundingClientRect().bottom),
+    return { audience: vis('.audience'), title: vis('.hero-title'), sub: vis('.hero-sub'), cta: vis('.hero-cta .btn'),
+      ctaBottom: Math.round(document.querySelector('.hero-cta .btn').getBoundingClientRect().bottom),
       img: [...document.querySelectorAll('.hero-img')].map(i => i.complete && i.naturalWidth > 0) };
   })()`);
   result.fonts = await js(`(async () => { await document.fonts.ready; const fams = new Set();
@@ -130,17 +130,11 @@ try {
 
   // ---- chân dung ----
   await scrollTo(top('#chan-dung', -70), 1500);
-  await js(`(() => { const rows = document.querySelectorAll('.compare-row'); rows[0].querySelector('.opt-fit').click(); rows[1].querySelector('.opt-unfit').click(); rows[2].querySelector('.opt-fit').click(); })()`);
   await sleep(900);
   await scrollTo(top('.compare-row:nth-of-type(2)', mobile ? 200 : -40), 1200);
   await shot('05-portrait');
-  result.portrait = await js(`({ pressed: [...document.querySelectorAll('.opt[aria-pressed=true]')].length, fitShown: !document.querySelector('.result--fit').hidden, unfitShown: !document.querySelector('.result--unfit').hidden })`);
+  result.portrait = await js(`({ blocks: document.querySelectorAll('.opt').length, buttons: document.querySelectorAll('.compare button').length, resultShown: !document.querySelector('.result--fit').hidden })`);
   result.bg.portrait = await js(bgCheck);
-  // bàn phím: Space trên nút đang focus
-  await js(`document.querySelector('.compare-row .opt-unfit').focus()`);
-  await key(' ', 'Space', 32);
-  result.portraitKeyboard = await js(`document.querySelector('.compare-row .opt-unfit').getAttribute('aria-pressed')`);
-  await js(`document.querySelector('.compare-row .opt-fit').click()`);
 
   // ---- lộ trình ----
   await scrollTo(top('#lo-trinh', mobile ? 60 : -40), 1500);

@@ -4,7 +4,7 @@
   "title": true,
   "sub": true,
   "cta": true,
-  "ctaBottom": 665,
+  "ctaBottom": 578,
   "img": [
    true,
    true
@@ -17,7 +17,6 @@
   "loaded": [
    "400normal",
    "400italic",
-   "500normal",
    "600normal",
    "700normal",
    "800normal"
@@ -51,11 +50,10 @@
  "particlesBack": "1",
  "pinned": true,
  "portrait": {
-  "pressed": 3,
-  "fitShown": true,
-  "unfitShown": false
+  "blocks": 6,
+  "buttons": 0,
+  "resultShown": true
  },
- "portraitKeyboard": "true",
  "journey": [
   true,
   true,
@@ -90,13 +88,7 @@
   "bad": []
  },
  "sticky": false,
- "targets": [
-  [
-   "blue-link",
-   290,
-   43
-  ]
- ],
+ "targets": [],
  "googleFonts": [],
  "requests": [
   "http://localhost:5173/index.html",
