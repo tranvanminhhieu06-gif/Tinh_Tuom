@@ -25,7 +25,9 @@ export default async function handler(req, res) {
     const s = v => String(v ?? '').trim();
 
     const name = s(b.ho_ten);
-    const phone = s(b.so_dien_thoai).replace(/[\s.\-]/g, '');
+    const phone = s(b.so_dien_thoai)
+        .replace(/[\s.\-()]/g, '')   // bỏ khoảng trắng, dấu chấm, gạch ngang, ngoặc
+        .replace(/^\+?84/, '0');     // +84 hoặc 84 -> 0
     const school = s(b.truong_nganh);
     const year = Number(b.nam_hoc);
     const goals = (Array.isArray(b.mong_muon) ? b.mong_muon : [b.mong_muon])

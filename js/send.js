@@ -7,7 +7,9 @@
         if (sending) return;
         const fd = new FormData(form);
         const t = k => String(fd.get(k) || '').trim();
-        const phone = t('so_dien_thoai').replace(/[\s.\-]/g, '');
+        const phone = t('so_dien_thoai')
+            .replace(/[\s.\-()]/g, '')
+            .replace(/^\+?84/, '0');
 
         // chỉ gửi khi đã điền đủ (API cũng kiểm tra lại)
         const valid = t('ho_ten') && /^0\d{9}$/.test(phone) && t('truong_nganh') &&

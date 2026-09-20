@@ -2,15 +2,6 @@
 <html lang="vi" class="no-js">
 
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MVZS5TFB8L"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-MVZS5TFB8L');
-  </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>NextGen Elite - Tinh hoa tự chủ | Tinh Tươm</title>
@@ -1727,24 +1718,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       border: 1.5px solid var(--black);
       border-radius: var(--r-lg);
       background: var(--white);
-      box-shadow: var(--shadow-2);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 24px
-    }
-
-    .apply-form-desc {
-      font-size: var(--fs-base);
-      line-height: 1.75;
-      color: var(--ink-2)
-    }
-
-    #google-form-btn {
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px
+      box-shadow: var(--shadow-2)
     }
 
     .progress-bar {
@@ -2715,7 +2689,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <p class="eyebrow"><span class="eyebrow-num">04</span><span class="eyebrow-rule" aria-hidden="true"></span>
           </p>
           <h2 class="h2" id="register-title" tabindex="-1">Đăng ký ngay</h2>
-          <p class="lead lead-step">Bước 1/4 · Điền đơn xét tuyển (Google Form)</p>
+          <p class="lead lead-step">Bước 1/4 · Điền đơn xét tuyển</p>
         </header>
 
         <div class="register-grid">
@@ -2726,21 +2700,132 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
               width="220" height="271" alt="Sinh viên nữ cầm sổ, làm dấu OK" decoding="async" loading="lazy">
           </aside>
 
-          <div class="apply-form" id="apply-form-wrapper">
-            <p class="apply-form-desc">Chỉ mất khoảng <strong>2 phút</strong> để điền đơn xét tuyển. Nhấn vào nút bên
-              dưới để mở Google Form!</p>
-            <a id="google-form-btn" class="btn btn-primary btn-lg magnetic"
-              href="https://docs.google.com/forms/d/e/1FAIpQLSd00dfVCuTzRNW-kz34aGmnZCkROnfogt1RSudD_JybVsmWlQ/viewform"
-              target="_blank" rel="noopener noreferrer" data-rise>
-              <span class="btn-label">Điền đơn đăng ký ngay</span>
-              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                <path d="M5 12h14m-6-6 6 6-6 6" />
-              </svg>
-              <span class="sr-only"> (mở tab mới)</span>
-            </a>
+          <form class="apply-form" id="apply-form" novalidate>
+            <div class="progress" aria-hidden="true">
+              <div class="progress-bar"><span></span></div>
+            </div>
+            <p class="progress-text" aria-live="polite">Phần <span data-cur>1</span>/3</p>
+
+            <div class="form-steps">
+              <fieldset class="fstep is-active" data-step="1" tabindex="-1">
+                <legend class="sr-only">Phần 1 trên 3: Thông tin liên hệ</legend>
+                <div class="field">
+                  <label for="f-name">Họ và tên</label>
+                  <div class="control"><input id="f-name" name="ho_ten" type="text" autocomplete="name" required
+                      aria-describedby="e-name"><span class="bar"></span></div>
+                  <p class="error" id="e-name" hidden><svg class="ic" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"
+                      focusable="false">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 7v6" />
+                      <circle cx="12" cy="16.6" r=".9" fill="currentColor" stroke="none" />
+                    </svg><span>Vui lòng nhập họ và tên.</span></p>
+                </div>
+                <div class="field">
+                  <label for="f-phone">Số điện thoại / Zalo</label>
+                  <div class="control"><input id="f-phone" name="so_dien_thoai" type="tel" inputmode="tel"
+                      autocomplete="tel-national" required aria-describedby="h-phone e-phone"><span class="bar"></span>
+                  </div>
+                  <p class="hint" id="h-phone">10 số, bắt đầu bằng 0</p>
+                  <p class="error" id="e-phone" hidden><svg class="ic" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"
+                      focusable="false">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 7v6" />
+                      <circle cx="12" cy="16.6" r=".9" fill="currentColor" stroke="none" />
+                    </svg><span>Số điện thoại cần đủ 10 số và bắt đầu bằng 0.</span></p>
+                </div>
+              </fieldset>
+
+              <fieldset class="fstep" data-step="2" tabindex="-1">
+                <legend class="sr-only">Phần 2 trên 3: Học tập và mong muốn</legend>
+                <div class="field">
+                  <label for="f-school">Trường &amp; Chuyên ngành đang học</label>
+                  <div class="control"><input id="f-school" name="truong_nganh" type="text" autocomplete="organization"
+                      required aria-describedby="e-school"><span class="bar"></span></div>
+                  <p class="error" id="e-school" hidden><svg class="ic" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"
+                      focusable="false">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 7v6" />
+                      <circle cx="12" cy="16.6" r=".9" fill="currentColor" stroke="none" />
+                    </svg><span>Vui lòng nhập trường và chuyên ngành.</span></p>
+                </div>
+                <div class="field">
+                  <label for="f-year">Năm học hiện tại</label>
+                  <div class="control control-select"><select id="f-year" name="nam_hoc" required
+                      aria-describedby="e-year">
+                      <option value="" selected disabled>Chọn năm học</option>
+                      <option value="1">Năm 1</option>
+                      <option value="2">Năm 2</option>
+                      <option value="3">Năm 3</option>
+                      <option value="4">Năm 4</option>
+                    </select><span class="bar"></span></div>
+                  <p class="error" id="e-year" hidden><svg class="ic" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"
+                      focusable="false">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 7v6" />
+                      <circle cx="12" cy="16.6" r=".9" fill="currentColor" stroke="none" />
+                    </svg><span>Vui lòng chọn năm học.</span></p>
+                </div>
+                <fieldset class="field checks" aria-describedby="e-wish">
+                  <legend>Mong muốn của bạn <span class="muted">(chọn nhiều đáp án)</span></legend>
+                  <label class="check"><input type="checkbox" name="mong_muon" value="Phát triển tư duy"><span
+                      class="box" aria-hidden="true"></span><span>Phát triển tư duy</span></label>
+                  <label class="check"><input type="checkbox" name="mong_muon"
+                      value="Phát triển kỹ năng chuyên môn"><span class="box" aria-hidden="true"></span><span>Phát triển
+                      kỹ năng chuyên môn</span></label>
+                  <label class="check"><input type="checkbox" name="mong_muon" value="Giao lưu và kết nối"><span
+                      class="box" aria-hidden="true"></span><span>Giao lưu và kết nối</span></label>
+                  <label class="check"><input type="checkbox" name="mong_muon" value="Tìm cơ hội thực tập"><span
+                      class="box" aria-hidden="true"></span><span>Tìm cơ hội thực tập</span></label>
+                  <p class="error" id="e-wish" hidden><svg class="ic" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"
+                      focusable="false">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 7v6" />
+                      <circle cx="12" cy="16.6" r=".9" fill="currentColor" stroke="none" />
+                    </svg><span>Chọn ít nhất một mong muốn.</span></p>
+                </fieldset>
+              </fieldset>
+
+              <fieldset class="fstep" data-step="3" tabindex="-1">
+                <legend class="sr-only">Phần 3 trên 3: Hành động chủ động</legend>
+                <div class="field">
+                  <label for="f-action">Một hành động chủ động nhất bạn từng làm để thay đổi bản thân trong 6 tháng qua
+                    là gì?</label>
+                  <p class="hint" id="h-action">Không cần dài, 1-3 câu là đủ</p>
+                  <div class="control"><textarea id="f-action" name="hanh_dong" rows="4" required
+                      aria-describedby="h-action e-action"></textarea><span class="bar"></span></div>
+                  <p class="error" id="e-action" hidden><svg class="ic" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"
+                      focusable="false">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 7v6" />
+                      <circle cx="12" cy="16.6" r=".9" fill="currentColor" stroke="none" />
+                    </svg><span>Vui lòng chia sẻ một hành động của bạn.</span></p>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="form-nav">
+              <button type="button" class="btn btn-ghost" data-prev hidden>Quay lại</button>
+              <button type="button" class="btn btn-outline" data-next><span class="btn-label">Tiếp tục</span><svg
+                  class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M5 12h14m-6-6 6 6-6 6" />
+                </svg></button>
+              <button type="submit" class="btn btn-primary btn-lg magnetic" data-submit hidden><span
+                  class="btn-label">Gửi hồ sơ</span><svg class="ic" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                  aria-hidden="true" focusable="false">
+                  <path d="M5 12h14m-6-6 6 6-6 6" />
+                </svg></button>
+            </div>
+            <p class="form-status" role="alert" hidden></p>
             <p class="privacy">Thông tin chỉ dùng để liên hệ xét tuyển chương trình.</p>
-          </div>
+          </form>
         </div>
       </div>
     </section>
